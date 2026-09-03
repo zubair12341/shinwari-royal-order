@@ -102,9 +102,10 @@ export const getMenu = createServerFn({ method: "GET" }).handler(async () => {
 
   const byCat = new Map<string, MenuProduct[]>();
   for (const raw of prods.data ?? []) {
-    const p = raw as unknown as MenuProduct & {
+    const p = raw as unknown as Omit<MenuProduct, "product_variants"> & {
       product_variants: (Variant & { is_active: boolean })[];
     };
+
     const product: MenuProduct = {
       ...p,
       product_variants: (p.product_variants ?? [])
