@@ -11,7 +11,9 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BranchesRouteImport } from './routes/branches'
+import { Route as CateringRouteImport } from './routes/catering'
 import { Route as MenuRouteImport } from './routes/menu'
+import { Route as ReserveRouteImport } from './routes/reserve'
 import { Route as TrackRouteImport } from './routes/track'
 
 const IndexRoute = IndexRouteImport.update({
@@ -24,9 +26,19 @@ const BranchesRoute = BranchesRouteImport.update({
   path: '/branches',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CateringRoute = CateringRouteImport.update({
+  id: '/catering',
+  path: '/catering',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MenuRoute = MenuRouteImport.update({
   id: '/menu',
   path: '/menu',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReserveRoute = ReserveRouteImport.update({
+  id: '/reserve',
+  path: '/reserve',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TrackRoute = TrackRouteImport.update({
@@ -38,34 +50,49 @@ const TrackRoute = TrackRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/branches': typeof BranchesRoute
+  '/catering': typeof CateringRoute
   '/menu': typeof MenuRoute
+  '/reserve': typeof ReserveRoute
   '/track': typeof TrackRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/branches': typeof BranchesRoute
+  '/catering': typeof CateringRoute
   '/menu': typeof MenuRoute
+  '/reserve': typeof ReserveRoute
   '/track': typeof TrackRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/branches': typeof BranchesRoute
+  '/catering': typeof CateringRoute
   '/menu': typeof MenuRoute
+  '/reserve': typeof ReserveRoute
   '/track': typeof TrackRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/branches' | '/menu' | '/track'
+  fullPaths: '/' | '/branches' | '/catering' | '/menu' | '/reserve' | '/track'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/branches' | '/menu' | '/track'
-  id: '__root__' | '/' | '/branches' | '/menu' | '/track'
+  to: '/' | '/branches' | '/catering' | '/menu' | '/reserve' | '/track'
+  id:
+    | '__root__'
+    | '/'
+    | '/branches'
+    | '/catering'
+    | '/menu'
+    | '/reserve'
+    | '/track'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BranchesRoute: typeof BranchesRoute
+  CateringRoute: typeof CateringRoute
   MenuRoute: typeof MenuRoute
+  ReserveRoute: typeof ReserveRoute
   TrackRoute: typeof TrackRoute
 }
 
@@ -85,11 +112,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BranchesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/catering': {
+      id: '/catering'
+      path: '/catering'
+      fullPath: '/catering'
+      preLoaderRoute: typeof CateringRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/menu': {
       id: '/menu'
       path: '/menu'
       fullPath: '/menu'
       preLoaderRoute: typeof MenuRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reserve': {
+      id: '/reserve'
+      path: '/reserve'
+      fullPath: '/reserve'
+      preLoaderRoute: typeof ReserveRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/track': {
@@ -105,7 +146,9 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BranchesRoute: BranchesRoute,
+  CateringRoute: CateringRoute,
   MenuRoute: MenuRoute,
+  ReserveRoute: ReserveRoute,
   TrackRoute: TrackRoute,
 }
 export const routeTree = rootRouteImport
