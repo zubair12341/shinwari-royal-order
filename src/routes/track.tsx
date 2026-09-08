@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -51,9 +51,14 @@ const LABELS: Record<string, string> = {
 };
 
 function TrackPage() {
-  const search = typeof window !== "undefined" ? new URLSearchParams(window.location.search) : null;
-  const [orderNumber, setOrderNumber] = useState(search?.get("order") ?? "");
+  const [orderNumber, setOrderNumber] = useState("");
   const [phone, setPhone] = useState("");
+
+  useEffect(() => {
+    const fromUrl = new URLSearchParams(window.location.search).get("order");
+    if (fromUrl) setOrderNumber(fromUrl);
+  }, []);
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [order, setOrder] = useState<TrackedOrder | null>(null);
