@@ -113,7 +113,7 @@ function MenuPage() {
             {c.description && <p className="mt-2 text-sm text-muted-foreground">{c.description}</p>}
             <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
               {c.products.map((p) => (
-                <MenuItemCard key={p.id} product={p} />
+                <MenuItemCard key={p.id} product={p} fallbackImage={c.image_url} />
               ))}
             </div>
           </section>

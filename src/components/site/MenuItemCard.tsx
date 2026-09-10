@@ -7,13 +7,22 @@ import { Button } from "@/components/ui/button";
 import { useCart } from "@/lib/cart";
 import { formatPrice } from "@/lib/format";
 import type { MenuProduct } from "@/lib/menu.functions";
+import { WhatsAppIcon } from "@/components/site/WhatsAppFab";
+import { DEFAULT_WHATSAPP, itemMessage, whatsappLink } from "@/lib/whatsapp";
 
-export function MenuItemCard({ product }: { product: MenuProduct }) {
+export function MenuItemCard({
+  product,
+  fallbackImage,
+}: {
+  product: MenuProduct;
+  fallbackImage?: string | null | undefined;
+}) {
   const { add } = useCart();
   const variants = product.product_variants ?? [];
   const [variantId, setVariantId] = useState<string | null>(variants[0]?.id ?? null);
   const variant = variants.find((v) => v.id === variantId) ?? null;
   const price = variant ? variant.price : product.base_price;
+  const image = product.image_url || fallbackImage || null;
 
   const badges = [
     product.is_chef_special && "Chef's Special",
@@ -38,7 +47,18 @@ export function MenuItemCard({ product }: { product: MenuProduct }) {
   }
 
   return (
-    <article className="group flex flex-col rounded-xl border border-border bg-card p-4 transition-shadow hover:shadow-md">
+    <article className="group flex flex-col overflow-hidden rounded-xl border border-border bg-card transition-shadow hover:shadow-md">
+      {image && (
+        <img
+          src={image}
+          alt={product.name}
+          width={1024}
+          height={683}
+          loading="lazy"
+          className="h-44 w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+        />
+      )}
+      <div className="flex flex-1 flex-col p-4">
       <div className="flex items-start justify-between gap-3">
         <div>
           <h3 className="font-display text-lg leading-snug">{product.name}</h3>
@@ -84,19 +104,28 @@ export function MenuItemCard({ product }: { product: MenuProduct }) {
         </div>
       )}
 
-      <div className="mt-4 flex items-center justify-between">
+      <div className="mt-4 flex items-center justify-between gap-2">
         {product.price_note && variants.length === 0 && (
           <span className="text-xs text-muted-foreground">{product.price_note}</span>
         )}
+        <a
+          href={whatsappLink(DEFAULT_WHATSAPP, itemMessage(product.name, variant?.name ?? null))}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="ml-auto inline-flex h-8 items-center gap-1.5 rounded-md border border-[#25D366] px-3 text-xs font-medium text-[#128C4A] hover:bg-[#25D366]/10"
+        >
+          <WhatsAppIcon className="h-3.5 w-3.5" />
+          WhatsApp
+        </a>
         <Button
           size="sm"
-          className="ml-auto"
           onClick={addToCart}
           disabled={product.out_of_stock || price == null}
         >
           <Plus className="h-4 w-4" />
           {product.out_of_stock ? "Unavailable" : "Add"}
         </Button>
+      </div>
       </div>
     </article>
   );

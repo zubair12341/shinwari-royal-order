@@ -14,7 +14,11 @@ export function whatsappLink(number: string, message: string): string {
 
 export function cartMessage(
   lines: CartLine[],
-  opts: { branchName?: string | null; fulfillment?: string; subtotal?: number } = {},
+  opts: {
+    branchName?: string | null | undefined;
+    fulfillment?: string | undefined;
+    subtotal?: number | undefined;
+  } = {},
 ): string {
   const items = lines
     .map(

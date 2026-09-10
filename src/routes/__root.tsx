@@ -13,6 +13,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Footer } from "@/components/site/Footer";
 import { Header } from "@/components/site/Header";
+import { WhatsAppFab } from "@/components/site/WhatsAppFab";
 import { Toaster } from "@/components/ui/sonner";
 import { CartProvider } from "@/lib/cart";
 
@@ -139,6 +140,7 @@ function RootComponent() {
           </main>
           <Footer />
         </div>
+        <WhatsAppFab />
         <Toaster position="top-center" richColors />
       </CartProvider>
     </QueryClientProvider>
