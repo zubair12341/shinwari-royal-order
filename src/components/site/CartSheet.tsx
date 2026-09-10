@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet";
 import { useCart } from "@/lib/cart";
 import { formatPrice } from "@/lib/format";
+import { WhatsAppIcon } from "@/components/site/WhatsAppFab";
+import { DEFAULT_WHATSAPP, cartMessage, whatsappLink } from "@/lib/whatsapp";
 
 export function CartSheet({
   open,
@@ -86,6 +88,15 @@ export function CartSheet({
               <Button asChild className="w-full" size="lg" onClick={() => onOpenChange(false)}>
                 <Link to="/checkout">Proceed to checkout</Link>
               </Button>
+              <a
+                href={whatsappLink(DEFAULT_WHATSAPP, cartMessage(lines, { subtotal }))}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex h-11 w-full items-center justify-center gap-2 rounded-md bg-[#25D366] text-sm font-semibold text-white hover:bg-[#1eb757]"
+              >
+                <WhatsAppIcon className="h-4 w-4" />
+                Order on WhatsApp
+              </a>
             </div>
           </>
         )}
