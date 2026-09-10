@@ -8,12 +8,19 @@ import { useCart } from "@/lib/cart";
 import { formatPrice } from "@/lib/format";
 import type { MenuProduct } from "@/lib/menu.functions";
 
-export function MenuItemCard({ product }: { product: MenuProduct }) {
+export function MenuItemCard({
+  product,
+  fallbackImage,
+}: {
+  product: MenuProduct;
+  fallbackImage?: string | null | undefined;
+}) {
   const { add } = useCart();
   const variants = product.product_variants ?? [];
   const [variantId, setVariantId] = useState<string | null>(variants[0]?.id ?? null);
   const variant = variants.find((v) => v.id === variantId) ?? null;
   const price = variant ? variant.price : product.base_price;
+  const image = product.image_url || fallbackImage || null;
 
   const badges = [
     product.is_chef_special && "Chef's Special",
@@ -38,7 +45,18 @@ export function MenuItemCard({ product }: { product: MenuProduct }) {
   }
 
   return (
-    <article className="group flex flex-col rounded-xl border border-border bg-card p-4 transition-shadow hover:shadow-md">
+    <article className="group flex flex-col overflow-hidden rounded-xl border border-border bg-card transition-shadow hover:shadow-md">
+      {image && (
+        <img
+          src={image}
+          alt={product.name}
+          width={1024}
+          height={683}
+          loading="lazy"
+          className="h-44 w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+        />
+      )}
+      <div className="flex flex-1 flex-col p-4">
       <div className="flex items-start justify-between gap-3">
         <div>
           <h3 className="font-display text-lg leading-snug">{product.name}</h3>

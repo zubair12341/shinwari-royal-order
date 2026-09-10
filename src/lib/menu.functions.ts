@@ -65,6 +65,7 @@ export type MenuCategory = {
   slug: string;
   name: string;
   description: string | null;
+  image_url: string | null;
   sort_order: number;
   products: MenuProduct[];
 };
@@ -86,7 +87,7 @@ export const getMenu = createServerFn({ method: "GET" }).handler(async () => {
   const [cats, prods] = await Promise.all([
     supabase
       .from("categories")
-      .select("id, slug, name, description, sort_order")
+      .select("id, slug, name, description, image_url, sort_order")
       .eq("is_active", true)
       .order("sort_order"),
     supabase
