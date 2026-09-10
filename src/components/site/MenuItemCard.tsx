@@ -7,6 +7,8 @@ import { Button } from "@/components/ui/button";
 import { useCart } from "@/lib/cart";
 import { formatPrice } from "@/lib/format";
 import type { MenuProduct } from "@/lib/menu.functions";
+import { WhatsAppIcon } from "@/components/site/WhatsAppFab";
+import { DEFAULT_WHATSAPP, itemMessage, whatsappLink } from "@/lib/whatsapp";
 
 export function MenuItemCard({
   product,
@@ -102,19 +104,28 @@ export function MenuItemCard({
         </div>
       )}
 
-      <div className="mt-4 flex items-center justify-between">
+      <div className="mt-4 flex items-center justify-between gap-2">
         {product.price_note && variants.length === 0 && (
           <span className="text-xs text-muted-foreground">{product.price_note}</span>
         )}
+        <a
+          href={whatsappLink(DEFAULT_WHATSAPP, itemMessage(product.name, variant?.name ?? null))}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="ml-auto inline-flex h-8 items-center gap-1.5 rounded-md border border-[#25D366] px-3 text-xs font-medium text-[#128C4A] hover:bg-[#25D366]/10"
+        >
+          <WhatsAppIcon className="h-3.5 w-3.5" />
+          WhatsApp
+        </a>
         <Button
           size="sm"
-          className="ml-auto"
           onClick={addToCart}
           disabled={product.out_of_stock || price == null}
         >
           <Plus className="h-4 w-4" />
           {product.out_of_stock ? "Unavailable" : "Add"}
         </Button>
+      </div>
       </div>
     </article>
   );
