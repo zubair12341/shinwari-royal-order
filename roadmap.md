@@ -5,8 +5,9 @@
 - Brand design system (golden yellow, burgundy, gold), logo, favicon
 - Public site: Home, Menu (search + category filter), Branches, Reserve, Catering, Track Order
 - Cart + checkout with delivery/pickup, server-side price validation, order numbers
+- Dish photos for every menu section + WhatsApp ordering (per dish, cart, floating button)
+- Staff dashboard at /admin: login, orders, menu editing, reservations, catering, branch settings
 
 ## Next
-- Customer accounts (sign in/up, saved addresses, order history)
-- Admin dashboard (orders, menu management, reservations, catering, branch settings)
+- Customer accounts (saved addresses, order history)
 - Real phone numbers, addresses, hours and dish photos from the owner

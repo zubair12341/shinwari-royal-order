@@ -16,6 +16,7 @@ const NAV = [
   { to: "/reserve", label: "Reserve" },
   { to: "/catering", label: "Catering" },
   { to: "/track", label: "Track Order" },
+  { to: "/admin", label: "Staff" },
 ] as const;
 
 export function Header() {
