@@ -33,7 +33,7 @@ export function RequestsPanel({ kind }: { kind: "reservations" | "catering_reque
 
   async function setStatus(id: string, status: string) {
     const { error } = await supabase.from(kind).update({ status } as never).eq("id", id);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     setRows((list) => list.map((r) => (r.id === id ? { ...r, status } : r)));
     toast.success("Updated");
   }

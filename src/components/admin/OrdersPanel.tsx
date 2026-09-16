@@ -70,7 +70,7 @@ export function OrdersPanel() {
       .from("orders")
       .update({ status: status as Order["status"] } as never)
       .eq("id", id);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     setOrders((o) => o.map((x) => (x.id === id ? { ...x, status } : x)));
     toast.success("Order updated");
   }
@@ -81,7 +81,7 @@ export function OrdersPanel() {
       .from("orders")
       .update({ payment_status: next } as never)
       .eq("id", o.id);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     setOrders((list) => list.map((x) => (x.id === o.id ? { ...x, payment_status: next } : x)));
   }
 
