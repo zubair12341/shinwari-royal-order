@@ -39,7 +39,7 @@ export function BranchesPanel() {
 
   async function patch(id: string, p: Partial<Branch>) {
     const { error } = await supabase.from("branches").update(p as never).eq("id", id);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     setBranches((l) => l.map((b) => (b.id === id ? { ...b, ...p } : b)));
     toast.success("Saved");
   }

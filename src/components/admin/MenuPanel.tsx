@@ -47,14 +47,14 @@ export function MenuPanel() {
 
   async function patchProduct(id: string, patch: Partial<Product>) {
     const { error } = await supabase.from("products").update(patch as never).eq("id", id);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     setProducts((list) => list.map((p) => (p.id === id ? { ...p, ...patch } : p)));
     toast.success("Saved");
   }
 
   async function patchCategory(id: string, patch: Partial<Category>) {
     const { error } = await supabase.from("categories").update(patch as never).eq("id", id);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     setCategories((list) => list.map((c) => (c.id === id ? { ...c, ...patch } : c)));
     toast.success("Saved");
   }
