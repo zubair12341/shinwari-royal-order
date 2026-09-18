@@ -1,12 +1,13 @@
 import { Link } from "@tanstack/react-router";
 import { Minus, Plus, Trash2 } from "lucide-react";
+import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet";
 import { useCart } from "@/lib/cart";
 import { formatPrice } from "@/lib/format";
 import { WhatsAppIcon } from "@/components/site/WhatsAppFab";
-import { DEFAULT_WHATSAPP, cartMessage, whatsappLink } from "@/lib/whatsapp";
+import { WHATSAPP_NUMBERS, cartMessage, whatsappLink } from "@/lib/whatsapp";
 
 export function CartSheet({
   open,
@@ -16,6 +17,8 @@ export function CartSheet({
   onOpenChange: (v: boolean) => void;
 }) {
   const { lines, setQty, remove, subtotal } = useCart();
+  const [branchIdx, setBranchIdx] = useState(0);
+  const branch = WHATSAPP_NUMBERS[branchIdx] ?? WHATSAPP_NUMBERS[0];
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
@@ -85,18 +88,41 @@ export function CartSheet({
                 <span className="text-muted-foreground">Subtotal</span>
                 <span className="font-display text-lg">{formatPrice(subtotal)}</span>
               </div>
-              <Button asChild className="w-full" size="lg" onClick={() => onOpenChange(false)}>
-                <Link to="/checkout">Proceed to checkout</Link>
-              </Button>
+
+              <div className="grid gap-1.5">
+                <label htmlFor="cart-branch" className="text-sm text-muted-foreground">
+                  Choose a branch
+                </label>
+                <select
+                  id="cart-branch"
+                  value={branchIdx}
+                  onChange={(e) => setBranchIdx(Number(e.target.value))}
+                  className="h-10 rounded-md border border-input bg-background px-3 text-sm"
+                >
+                  {WHATSAPP_NUMBERS.map((b, i) => (
+                    <option key={b.number} value={i}>
+                      {b.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
               <a
-                href={whatsappLink(DEFAULT_WHATSAPP, cartMessage(lines, { subtotal }))}
+                href={whatsappLink(
+                  branch.number,
+                  cartMessage(lines, { subtotal, branchName: branch.label }),
+                )}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex h-11 w-full items-center justify-center gap-2 rounded-md bg-[#25D366] text-sm font-semibold text-white hover:bg-[#1eb757]"
+                onClick={() => onOpenChange(false)}
+                className="flex h-12 w-full items-center justify-center gap-2 rounded-md bg-[#25D366] text-sm font-semibold text-white hover:bg-[#1eb757]"
               >
-                <WhatsAppIcon className="h-4 w-4" />
-                Order on WhatsApp
+                <WhatsAppIcon className="h-5 w-5" />
+                Place order on WhatsApp
               </a>
+              <p className="text-center text-xs text-muted-foreground">
+                We'll confirm your order and delivery details on WhatsApp.
+              </p>
             </div>
           </>
         )}
