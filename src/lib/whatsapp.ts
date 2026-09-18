@@ -44,3 +44,27 @@ export function cartMessage(
 export function itemMessage(name: string, variant?: string | null): string {
   return `Assalam-o-Alaikum! I'd like to order ${name}${variant ? ` (${variant})` : ""} from Arabic Shinwari Restaurant.`;
 }
+
+export function reservationMessage(d: {
+  branchName: string;
+  full_name: string;
+  phone: string;
+  date: string;
+  time: string;
+  guests: string | number;
+  special_request?: string;
+}): string {
+  return [
+    "Assalam-o-Alaikum! I'd like to reserve a table at Arabic Shinwari Restaurant.",
+    "",
+    `Branch: ${d.branchName}`,
+    `Name: ${d.full_name}`,
+    `Phone: ${d.phone}`,
+    `Date: ${d.date}`,
+    `Time: ${d.time}`,
+    `Guests: ${d.guests}`,
+    d.special_request ? `Special request: ${d.special_request}` : "",
+  ]
+    .filter(Boolean)
+    .join("\n");
+}
