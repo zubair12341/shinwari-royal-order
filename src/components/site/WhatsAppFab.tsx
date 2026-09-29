@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { DEFAULT_WHATSAPP, WHATSAPP_NUMBERS, cartMessage, whatsappLink } from "@/lib/whatsapp";
+import { WHATSAPP_NUMBERS, cartMessage, whatsappLink } from "@/lib/whatsapp";
 import { useCart } from "@/lib/cart";
 
 function WhatsAppIcon({ className }: { className?: string }) {
@@ -51,4 +51,4 @@ export function WhatsAppFab() {
   );
 }
 
-export { WhatsAppIcon, DEFAULT_WHATSAPP };
+export { WhatsAppIcon };
