@@ -1,7 +1,48 @@
 import type { Branch, MenuCategory, MenuProduct } from "@/lib/menu.functions";
 
-const IMAGE_QUERIES: Record<string,string> = {"burger":"crispy,chicken,burger","broast":"fried,chicken","sandwich":"grilled,sandwich","shawarma":"chicken,shawarma","fries":"french,fries","roll":"chicken,wrap","pizza":"pizza","chinese":"chinese,fried,rice","loaded-fries":"loaded,fries","pasta":"chicken,pasta","bbq-roll":"bbq,wrap","bbq-boti":"chicken,bbq,skewer","tikka":"chicken,tikka","kabab":"seekh,kebab","bbq-platter":"mixed,grill,platter","chicken-karahi":"chicken,karahi","chicken-handi":"chicken,curry","mutton-karahi":"mutton,karahi","mutton-handi":"mutton,curry","dumba-karahi":"lamb,karahi","beef-karahi":"beef,karahi","afghani":"afghani,pulao","sajji":"roast,chicken","matka-biryani":"biryani,clay,pot","dum-pukht":"mutton,dum,pukht","matka-rosh":"mutton,roast,rice","mutton-wreta":"grilled,mutton","mutton-champ":"lamb,chops","patta-tikka":"chicken,tikka,skewers","mutton-mandi":"mutton,mandi,rice","chicken-mandi":"chicken,mandi,rice","rice-platter":"bbq,rice,platter","family-platter":"mixed,grill,platter","chai":"pakistani,chai","tandoor":"naan,bread","soup":"chicken,soup","salad":"fresh,salad"};
-const img=(name:string)=>{const query=IMAGE_QUERIES[name]??name.replace(/-/g,",");const lock=Array.from(name).reduce((sum,ch)=>sum+ch.charCodeAt(0),0);return `https://loremflickr.com/900/600/${query}?lock=${lock}`;};
+const CURATED_IMAGES: Record<string, string> = {
+  burger: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd",
+  broast: "https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58",
+  sandwich: "https://images.unsplash.com/photo-1528735602780-2552fd46c7af",
+  shawarma: "https://images.unsplash.com/photo-1529006557810-274b9b2fc783",
+  fries: "https://images.unsplash.com/photo-1573080496219-bb080dd4f877",
+  roll: "https://images.unsplash.com/photo-1565299507177-b0ac66763828",
+  pizza: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002",
+  chinese: "https://images.unsplash.com/photo-1512058564366-18510be2db19",
+  "loaded-fries": "https://images.unsplash.com/photo-1573080496219-bb080dd4f877",
+  pasta: "https://images.unsplash.com/photo-1473093295043-cdd812d0e601",
+  "bbq-roll": "https://images.unsplash.com/photo-1565299507177-b0ac66763828",
+  "bbq-boti": "https://images.unsplash.com/photo-1529193591184-b1d58069ecdd",
+  tikka: "https://images.unsplash.com/photo-1529193591184-b1d58069ecdd",
+  kabab: "https://images.unsplash.com/photo-1529193591184-b1d58069ecdd",
+  "bbq-platter": "https://images.unsplash.com/photo-1544025162-d76694265947",
+  "chicken-karahi": "https://images.unsplash.com/photo-1601050690597-df0568f70950",
+  "chicken-handi": "https://images.unsplash.com/photo-1601050690117-94f5f6fa8bd7",
+  "mutton-karahi": "https://images.unsplash.com/photo-1547592180-85f173990554",
+  "mutton-handi": "https://images.unsplash.com/photo-1601050690597-df0568f70950",
+  "dumba-karahi": "https://images.unsplash.com/photo-1547592180-85f173990554",
+  "beef-karahi": "https://images.unsplash.com/photo-1547592180-85f173990554",
+  afghani: "https://images.unsplash.com/photo-1512058564366-18510be2db19",
+  sajji: "https://images.unsplash.com/photo-1532550907401-a500c9a57435",
+  "matka-biryani": "https://images.unsplash.com/photo-1563379926898-05f4575a45d8",
+  "dum-pukht": "https://images.unsplash.com/photo-1547592180-85f173990554",
+  "matka-rosh": "https://images.unsplash.com/photo-1544025162-d76694265947",
+  "mutton-wreta": "https://images.unsplash.com/photo-1544025162-d76694265947",
+  "mutton-champ": "https://images.unsplash.com/photo-1544025162-d76694265947",
+  "patta-tikka": "https://images.unsplash.com/photo-1529193591184-b1d58069ecdd",
+  "mutton-mandi": "https://images.unsplash.com/photo-1512058564366-18510be2db19",
+  "chicken-mandi": "https://images.unsplash.com/photo-1563379926898-05f4575a45d8",
+  "rice-platter": "https://images.unsplash.com/photo-1512058564366-18510be2db19",
+  "family-platter": "https://images.unsplash.com/photo-1544025162-d76694265947",
+  chai: "https://images.unsplash.com/photo-1544787219-7f47ccb76574",
+  tandoor: "https://images.unsplash.com/photo-1601050690597-df0568f70950",
+  soup: "https://images.unsplash.com/photo-1547592180-85f173990554",
+  salad: "https://images.unsplash.com/photo-1540420773420-3366772f4999",
+};
+const img = (name: string) => {
+  const base = CURATED_IMAGES[name] ?? CURATED_IMAGES["family-platter"];
+  return `${base}?auto=format&fit=crop&w=900&h=600&q=78`;
+};
 const slugify=(s:string)=>s.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
 type RawItem=[string,number|null,[string,number][],string|null,string[]|null,string|null];
 type RawCategory=[string,string,string|null,RawItem[]];
