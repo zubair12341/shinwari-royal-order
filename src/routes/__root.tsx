@@ -129,6 +129,29 @@ function RootShell({ children }: { children: ReactNode }) {
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
+  useEffect(() => {
+    const removeLovableBadge = () => {
+      document.querySelectorAll<HTMLElement>(
+        '#lovable-badge, [data-lovable-badge], a[href*="lovable.dev"], [class*="lovable"], [id*="lovable"]',
+      ).forEach((element) => {
+        const text = element.textContent?.toLowerCase() ?? "";
+        const href = element instanceof HTMLAnchorElement ? element.href.toLowerCase() : "";
+        if (
+          text.includes("edit with lovable") ||
+          text.trim() === "lovable" ||
+          href.includes("lovable.dev")
+        ) {
+          element.remove();
+        }
+      });
+    };
+
+    removeLovableBadge();
+    const observer = new MutationObserver(removeLovableBadge);
+    observer.observe(document.documentElement, { childList: true, subtree: true });
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <QueryClientProvider client={queryClient}>
       <CartProvider>
