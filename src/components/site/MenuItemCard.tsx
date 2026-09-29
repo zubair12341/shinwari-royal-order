@@ -15,6 +15,7 @@ export function MenuItemCard({ product, fallbackImage }: { product: MenuProduct;
   const variant=variants.find(v=>v.id===variantId)??null;
   const price=variant?variant.price:product.base_price;
   const image=product.image_url||fallbackImage||null;
+  const [imageFailed,setImageFailed]=useState(false);
   const badges=[product.is_chef_special&&"Chef's Special",product.is_bestseller&&"Bestseller",product.is_popular&&"Popular",product.is_new&&"New"].filter(Boolean) as string[];
 
   function addToCart(){
@@ -25,7 +26,17 @@ export function MenuItemCard({ product, fallbackImage }: { product: MenuProduct;
 
   return (
     <article className="group flex flex-col overflow-hidden rounded-xl border border-border bg-card transition-shadow hover:shadow-md">
-      {image&&<img src={image} alt={product.name} width={900} height={600} loading="lazy" className="h-44 w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]" />}
+      {image&&!imageFailed&&<img
+        src={image}
+        alt={product.name}
+        width={900}
+        height={600}
+        loading="lazy"
+        decoding="async"
+        onError={()=>setImageFailed(true)}
+        className="h-44 w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+      />}
+      {(!image||imageFailed)&&<div className="flex h-44 w-full items-center justify-center bg-muted text-sm text-muted-foreground">Arabic Shinwari</div>}
       <div className="flex flex-1 flex-col p-4">
         <div className="flex items-start justify-between gap-3">
           <div>
