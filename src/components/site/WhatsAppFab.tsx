@@ -14,8 +14,6 @@ function WhatsAppIcon({ className }: { className?: string }) {
 export function WhatsAppFab() {
   const [open, setOpen] = useState(false);
   const { lines, subtotal } = useCart();
-  const message = cartMessage(lines, { subtotal: subtotal || undefined });
-
   return (
     <div className="fixed bottom-5 right-5 z-50 flex flex-col items-end gap-2">
       {open && (
@@ -26,7 +24,13 @@ export function WhatsAppFab() {
           {WHATSAPP_NUMBERS.map((b) => (
             <a
               key={b.number}
-              href={whatsappLink(\n                b.number,\n                cartMessage(lines, {\n                  subtotal: subtotal || undefined,\n                  branchName: b.label,\n                }),\n              )}
+              href={whatsappLink(
+                b.number,
+                cartMessage(lines, {
+                  subtotal: subtotal || undefined,
+                  branchName: b.label,
+                }),
+              )}
               target="_blank"
               rel="noopener noreferrer"
               className="block rounded-lg px-3 py-2 text-sm hover:bg-muted"
