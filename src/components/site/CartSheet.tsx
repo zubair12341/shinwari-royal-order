@@ -17,8 +17,8 @@ export function CartSheet({
   onOpenChange: (v: boolean) => void;
 }) {
   const { lines, setQty, remove, subtotal } = useCart();
-  const [branchIdx, setBranchIdx] = useState(0);
-  const branch = WHATSAPP_NUMBERS[branchIdx] ?? WHATSAPP_NUMBERS[0];
+  const [branchIdx, setBranchIdx] = useState<number | null>(null);
+  const branch = branchIdx === null ? null : WHATSAPP_NUMBERS[branchIdx];
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
@@ -95,10 +95,15 @@ export function CartSheet({
                 </label>
                 <select
                   id="cart-branch"
-                  value={branchIdx}
-                  onChange={(e) => setBranchIdx(Number(e.target.value))}
+                  value={branchIdx ?? ""}
+                  onChange={(e) =>
+                    setBranchIdx(e.target.value === "" ? null : Number(e.target.value))
+                  }
                   className="h-10 rounded-md border border-input bg-background px-3 text-sm"
                 >
+                  <option value="" disabled>
+                    Select your branch
+                  </option>
                   {WHATSAPP_NUMBERS.map((b, i) => (
                     <option key={b.number} value={i}>
                       {b.label}
@@ -107,19 +112,25 @@ export function CartSheet({
                 </select>
               </div>
 
-              <a
-                href={whatsappLink(
-                  branch.number,
-                  cartMessage(lines, { subtotal, branchName: branch.label }),
-                )}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => onOpenChange(false)}
-                className="flex h-12 w-full items-center justify-center gap-2 rounded-md bg-[#25D366] text-sm font-semibold text-white hover:bg-[#1eb757]"
-              >
-                <WhatsAppIcon className="h-5 w-5" />
-                Place order on WhatsApp
-              </a>
+              {branch ? (
+                <a
+                  href={whatsappLink(
+                    branch.number,
+                    cartMessage(lines, { subtotal, branchName: branch.label }),
+                  )}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => onOpenChange(false)}
+                  className="flex h-12 w-full items-center justify-center gap-2 rounded-md bg-[#25D366] text-sm font-semibold text-white hover:bg-[#1eb757]"
+                >
+                  <WhatsAppIcon className="h-5 w-5" />
+                  Place order on WhatsApp
+                </a>
+              ) : (
+                <Button type="button" disabled className="h-12 w-full">
+                  Select a branch to continue
+                </Button>
+              )}
               <p className="text-center text-xs text-muted-foreground">
                 We'll confirm your order and delivery details on WhatsApp.
               </p>
