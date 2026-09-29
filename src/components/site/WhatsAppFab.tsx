@@ -26,7 +26,7 @@ export function WhatsAppFab() {
           {WHATSAPP_NUMBERS.map((b) => (
             <a
               key={b.number}
-              href={whatsappLink(b.number, message)}
+              href={whatsappLink(\n                b.number,\n                cartMessage(lines, {\n                  subtotal: subtotal || undefined,\n                  branchName: b.label,\n                }),\n              )}
               target="_blank"
               rel="noopener noreferrer"
               className="block rounded-lg px-3 py-2 text-sm hover:bg-muted"
