@@ -175,3 +175,13 @@
   );
 }
 
+
+/* Hide Lovable's injected preview/published-site badge. */
+#lovable-badge,
+a#lovable-badge,
+[data-lovable-badge],
+a[href*="lovable.dev"][style*="position: fixed"] {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
